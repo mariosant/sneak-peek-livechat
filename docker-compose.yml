@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  redis:
+    image: redis:5-alpine
+    ports:
+      - 6379:6379
+  mongodb:
+    image: mongo:3.4
+    ports:
+      - "27017:27017"

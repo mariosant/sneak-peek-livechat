@@ -4,6 +4,8 @@ const queue = require("../lib/queue");
 const createBot = require("./create-bot");
 const unfurl = require("./unfurl");
 
+const { REDIS_URL } = process.env;
+
 const jobIs = R.propEq("name");
 
 const workerFn = R.cond([
@@ -12,6 +14,6 @@ const workerFn = R.cond([
   [R.T, console.log],
 ]);
 
-const worker = new Worker(queue.name, workerFn);
+const worker = new Worker(queue.name, workerFn, { connection: REDIS_URL });
 
 module.exports = worker;

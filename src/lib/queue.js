@@ -1,11 +1,12 @@
 const { Queue, QueueScheduler } = require("bullmq");
+const redisConnection = require("./redis-connection");
 
-const { REDIS_URL } = process.env;
-
-const queueScheduler = new QueueScheduler("queue");
+const queueScheduler = new QueueScheduler("queue", {
+  connection: redisConnection,
+});
 
 const queue = new Queue("queue", {
-  connection: REDIS_URL,
+  connection: redisConnection,
 });
 
 module.exports = queue;

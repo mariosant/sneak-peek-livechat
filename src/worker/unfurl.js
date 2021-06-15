@@ -15,6 +15,10 @@ const handler = async ({ data }) => {
 
   const text = data.payload?.event?.text ?? "";
 
+  if (text.includes('@')) {
+    return
+  }
+
   const [url] = Array.from(
     getUrls(text, {
       forceHttps: true,

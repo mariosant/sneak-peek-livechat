@@ -44,7 +44,7 @@ const handler = async ({ data }) => {
             {
               text: "Open",
               type: "url",
-              value: mqlData.url,
+              value: url,
               postback_id: "open_url",
               user_ids: [],
             },

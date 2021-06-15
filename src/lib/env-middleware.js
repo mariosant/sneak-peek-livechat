@@ -6,7 +6,7 @@ const middleware = async (ctx, next) => {
   ctx.collections = collections;
   ctx.queue = queue;
 
-  next();
+  await next();
 };
 
 module.exports = middleware;

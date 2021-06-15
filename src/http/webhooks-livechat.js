@@ -8,7 +8,7 @@ const secureWebhooks = async (ctx, next) => {
   const { body } = ctx.request;
 
   if (body.secret_key === LC_WEBHOOKS_SECRET) {
-    next();
+    await next();
   }
 };
 

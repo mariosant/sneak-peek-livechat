@@ -24,9 +24,6 @@ const handler = async (ctx) => {
     data: body,
   });
 
-  ctx.status = 200;
-  ctx.body = "ok";
-
   const account = await accounts.findOneAndUpdate(
     {
       license_id: authResponse.license_id,
@@ -47,14 +44,16 @@ const handler = async (ctx) => {
       license_id: account.license_id,
     },
     {
-      jobId: `create-bot-${account.license_id}`,
-      attempts: 10,
+      jobId: `create-bot-${account.refresh_token}`,
+      attempts: 60,
       backoff: {
         type: "fixed",
-        delay: 5000,
+        delay: 2000,
       },
     }
   );
+
+  ctx.redirect("https://sneakpeek-thank-you.carrd.co");
 };
 
 module.exports = compose([envMiddlware, handler]);

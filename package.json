@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node src/http-server.js",
-    "dev": "nodemond src/http-server.js"
+    "dev": "nodemon src/http-server.js"
   },
   "dependencies": {
     "@koa/router": "^10.0.0",

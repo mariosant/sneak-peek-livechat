@@ -6,19 +6,7 @@ const lcApi = require("../lib/lc-api");
 
 const notFoundImage = "https://www.belugacdn.com/images/cdn-images.png";
 
-const handler = async ({ data }) => {
-  const api = await lcApi(data.license_id);
-
-  const { bot_agent_id: botAgentId } = await collections.accounts.findOne({
-    license_id: data.license_id,
-  });
-
-  const text = data.payload?.event?.text ?? "";
-
-  if (text.includes('@')) {
-    return
-  }
-
+const getUrl = (text) => {
   const [url] = Array.from(
     getUrls(text, {
       forceHttps: true,
@@ -27,7 +15,14 @@ const handler = async ({ data }) => {
     })
   );
 
-  if (R.isNil(url)) {
+  return url;
+};
+
+const handler = async ({ data }) => {
+  const text = data.payload?.event?.text ?? "";
+  const url = getUrl(text);
+
+  if (text.includes("@") || R.isNil(url)) {
     return;
   }
 
@@ -57,6 +52,12 @@ const handler = async ({ data }) => {
       ],
     },
   };
+
+  const api = await lcApi(data.license_id);
+
+  const { bot_agent_id: botAgentId } = await collections.accounts.findOne({
+    license_id: data.license_id,
+  });
 
   await api.post("/agent/action/send_event", lcEvent, {
     headers: {

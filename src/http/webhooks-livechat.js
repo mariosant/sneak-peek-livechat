@@ -1,6 +1,5 @@
 const compose = require("koa-compose");
 const bodyParser = require("koa-bodyparser");
-const envMiddlware = require("../lib/env-middleware");
 
 const { LC_WEBHOOKS_SECRET } = process.env;
 
@@ -29,6 +28,5 @@ const handler = async (ctx) => {
 module.exports = compose([
   bodyParser({ enableTypes: ["json"] }),
   secureWebhooks,
-  envMiddlware,
   handler,
 ]);

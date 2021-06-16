@@ -1,7 +1,5 @@
 const axios = require("axios");
 const qs = require("qs");
-const compose = require("koa-compose");
-const envMiddlware = require("../lib/env-middleware");
 
 const { LC_CLIENT_ID, LC_CLIENT_SECRET, LC_REDIRECT_URI } = process.env;
 
@@ -56,4 +54,4 @@ const handler = async (ctx) => {
   ctx.redirect("https://sneakpeek-thank-you.carrd.co");
 };
 
-module.exports = compose([envMiddlware, handler]);
+module.exports = handler;

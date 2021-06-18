@@ -1,8 +1,16 @@
 const R = require("ramda");
 const getUrls = require("get-urls");
-const mql = require("@microlink/mql");
+const axios = require("axios");
+const htmlGet = require("html-get");
+const createMetascraper = require("metascraper");
 const { collections } = require("../lib/db");
 const lcApi = require("../lib/lc-api");
+
+const metascraper = createMetascraper([
+  require("metascraper-description")(),
+  require("metascraper-image")(),
+  require("metascraper-title")(),
+]);
 
 const notFoundImage = "https://www.belugacdn.com/images/cdn-images.png";
 
@@ -26,7 +34,8 @@ const handler = async ({ data }) => {
     return;
   }
 
-  const { data: mqlData } = await mql(url);
+  const response = await htmlGet(url, { prerender: true });
+  const mqlData = await metascraper({ html: response.html, url: response.url });
 
   const lcEvent = {
     chat_id: data.payload.chat_id,
@@ -38,7 +47,6 @@ const handler = async ({ data }) => {
         {
           title: mqlData.title,
           subtitle: mqlData.description,
-          image: { url: mqlData.image?.url ?? notFoundImage },
           buttons: [
             {
               text: "Open",
@@ -48,6 +56,7 @@ const handler = async ({ data }) => {
               user_ids: [],
             },
           ],
+          ...(mqlData.image && { image: { url: mqlData.image } }),
         },
       ],
     },

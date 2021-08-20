@@ -34,7 +34,7 @@ const handler = async ({ data }) => {
     return;
   }
 
-  const response = await htmlGet(url, { prerender: true });
+  const response = await htmlGet(url);
   const mqlData = await metascraper({ html: response.html, url: response.url });
 
   const lcEvent = {

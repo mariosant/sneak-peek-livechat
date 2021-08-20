@@ -7,7 +7,11 @@ const secureWebhooks = async (ctx, next) => {
   const { body } = ctx.request;
 
   if (body.secret_key === LC_WEBHOOKS_SECRET) {
+    console.log("Webhook received: ", JSON.stringify(body, null, 4));
     await next();
+  } else {
+    console.log("Webhook ignored due to wrong secret");
+    ctx.status = 200;
   }
 };
 

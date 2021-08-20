@@ -15,6 +15,7 @@ const router = new Router();
 router.get("/auth/callback", registration);
 router.post("/webhooks", webhooks);
 router.get("/health", health);
+
 app.use(router.routes());
 
 app.listen(port, () => {

@@ -1,6 +1,5 @@
 const R = require("ramda");
 const getUrls = require("get-urls");
-const axios = require("axios");
 const htmlGet = require("html-get");
 const createMetascraper = require("metascraper");
 const { collections } = require("../lib/db");
@@ -11,8 +10,6 @@ const metascraper = createMetascraper([
   require("metascraper-image")(),
   require("metascraper-title")(),
 ]);
-
-const notFoundImage = "https://www.belugacdn.com/images/cdn-images.png";
 
 const getUrl = (text) => {
   const [url] = Array.from(
@@ -73,6 +70,8 @@ const handler = async ({ data }) => {
       "X-Author-Id": botAgentId,
     },
   });
+
+  console.log(`[LC: ${data.license_id}] Url unfurled 😊`, { url, mqlData });
 };
 
 module.exports = handler;

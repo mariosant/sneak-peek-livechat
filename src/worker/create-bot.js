@@ -41,7 +41,7 @@ const handler = async ({ data }) => {
     }
   );
 
-  console.log("bot created", bot);
+  console.log(`[LC: ${data.license_id}] Bot created 🤖`, bot);
 };
 
 module.exports = handler;

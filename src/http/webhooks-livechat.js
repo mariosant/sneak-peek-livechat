@@ -6,6 +6,8 @@ const { LC_WEBHOOKS_SECRET } = process.env;
 const secureWebhooks = async (ctx, next) => {
   const { body } = ctx.request;
 
+  console.log(body.secret_key);
+
   if (body.secret_key === LC_WEBHOOKS_SECRET) {
     console.log("Webhook received: ", JSON.stringify(body, null, 4));
     await next();

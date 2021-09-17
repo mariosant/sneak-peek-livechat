@@ -51,21 +51,6 @@ const handler = async (ctx) => {
     }
   );
 
-  // await queue.add(
-  //   "create-chat-webhooks",
-  //   {
-  //     license_id: account.license_id,
-  //   },
-  //   {
-  //     jobId: `create-chat-webhooks-${account.refresh_token}`,
-  //     attempts: 60,
-  //     backoff: {
-  //       type: "fixed",
-  //       delay: 2000,
-  //     },
-  //   }
-  // );
-
   ctx.redirect("https://sneakpeek-thank-you.carrd.co");
 };
 

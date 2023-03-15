@@ -54,6 +54,7 @@ const lcApi = async (licenseId) => {
     baseURL: "https://api.livechatinc.com/v3.3",
     headers: {
       authorization: `Bearer ${accessToken}`,
+      "X-Region": accessToken.substr(0, 3),
     },
   });
 

@@ -51,7 +51,7 @@ const lcApi = async (licenseId) => {
     : await getToken(account);
 
   const client = axios.create({
-    baseURL: "https://api.livechatinc.com/v3.3",
+    baseURL: "https://api.livechatinc.com/v3.4",
     headers: {
       authorization: `Bearer ${accessToken}`,
       "X-Region": accessToken.substr(0, 3),

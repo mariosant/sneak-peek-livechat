@@ -1,9 +1,9 @@
 const R = require("ramda");
 const getUrls = require("get-urls");
-const htmlGet = require("html-get");
 const createMetascraper = require("metascraper");
 const { collections } = require("../lib/db");
 const lcApi = require("../lib/lc-api");
+const { default: axios } = require("axios");
 
 const metascraper = createMetascraper([
   require("metascraper-description")(),
@@ -31,10 +31,8 @@ const handler = async ({ data }) => {
     return;
   }
 
-  const response = await htmlGet(url, {
-    getBrowserless: require("browserless"),
-  });
-  const mqlData = await metascraper({ html: response.html, url: response.url });
+  const response = await axios.get(url);
+  const mqlData = await metascraper({ html: response.data, url });
 
   const lcEvent = {
     chat_id: data.payload.chat_id,

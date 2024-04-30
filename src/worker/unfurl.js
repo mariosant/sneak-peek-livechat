@@ -31,7 +31,9 @@ const handler = async ({ data }) => {
     return;
   }
 
-  const response = await htmlGet(url, { getMode: () => "fetch" });
+  const response = await htmlGet(url, {
+    getBrowserless: require("browserless"),
+  });
   const mqlData = await metascraper({ html: response.html, url: response.url });
 
   const lcEvent = {

@@ -65,13 +65,24 @@ const handler = async ({ data }) => {
     license_id: data.license_id,
   });
 
-  await api.post("/agent/action/send_event", lcEvent, {
-    headers: {
-      "X-Author-Id": botAgentId,
-    },
-  });
-
-  console.log(`[LC: ${data.license_id}] Url unfurled 😊`, { url, mqlData });
+  await api
+    .post("/agent/action/send_event", lcEvent, {
+      headers: {
+        "X-Author-Id": botAgentId,
+      },
+    })
+    .then(() => {
+      console.log(`[LC: ${data.license_id}] Url unfurled 😊`, { url, mqlData });
+    })
+    .catch((error) => {
+      console.log(
+        "Request failed",
+        error.response.status,
+        botAgentId,
+        JSON.stringify(error.response.data),
+        JSON.stringify(lcEvent)
+      );
+    });
 };
 
 module.exports = handler;
